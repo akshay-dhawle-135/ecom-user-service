@@ -1,9 +1,9 @@
-service: ecom-user-service
+service: '${env:SERVICE_NAME_PREFIX, "local"}'
 frameworkVersion: '3'
 useDotenv: true
 
 custom:
-  secretsPrefix: '/${env:SERVICE_NAME_PREFIX, "/xcs-dev-usea1-ecom-user-service-api"}'
+  secretsPrefix: '/${env:SERVICE_NAME_PREFIX, "/ecom-dev-usea1-ecom-user-service-api"}'
 
 provider:
   name: aws
