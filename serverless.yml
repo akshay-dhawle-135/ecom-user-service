@@ -1,0 +1,25 @@
+service: ecom-user-service
+frameworkVersion: '3'
+useDotenv: true
+
+custom:
+  secretsPrefix: '/${env:SERVICE_NAME_PREFIX, "/xcs-dev-usea1-ecom-user-service-api"}'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-south-1
+
+functions:
+  healthCheck:
+    handler: index.handler
+    environment:
+      key: ${env:API_KEY, ssm:${self:custom.secretsPrefix}/API_KEY}
+    events:
+      - http:
+          method: get
+          path: v1/healthcheck    
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
