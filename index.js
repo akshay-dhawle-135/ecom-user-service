@@ -13,6 +13,13 @@ const dataSource = new DataSource({
 
 module.exports.handler = async () => {
   try {
+    console.log('handler hit', {
+      host: process.env.DB_HOST, 
+      port: Number(process.env.DB_PORT) || 5432,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+    })
     if (!dataSource.isInitialized) {
       await dataSource.initialize();
     }
