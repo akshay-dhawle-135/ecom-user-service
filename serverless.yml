@@ -9,6 +9,12 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: ap-south-1
+  environment:
+    DB_HOST: ${env:DB_HOST, ssm:${self:custom.secretsPrefix}/DB_HOST}  
+    DB_NAME: ${env:DB_NAME, ssm:${self:custom.secretsPrefix}/DB_NAME}
+    DB_USERNAME: ${env:DB_USER, ssm:${self:custom.secretsPrefix}/DB_USERNAME}
+    DB_PASSWORD: ${env:DB_PASSWORD, ssm:${self:custom.secretsPrefix}/DB_PASSWORD}
+    DB_PORT: ${env:DB_PORT, ssm:${self:custom.secretsPrefix}/DB_PORT}
 
 functions:
   healthCheck:

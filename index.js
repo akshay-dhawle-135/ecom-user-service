@@ -1,16 +1,30 @@
-module.exports.handler = async (event) => {
-  
-  console.log('env SSM', process.env.API_KEY);
+const { DataSource } = require('typeorm');
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v3.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+const dataSource = new DataSource({
+  type: 'postgres',
+  host: process.env.DB_HOST, 
+  port: Number(process.env.DB_PORT) || 5432,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  synchronize: false,
+  logging: false,
+});
+
+module.exports.handler = async () => {
+  try {
+    if (!dataSource.isInitialized) {
+      await dataSource.initialize();
+    }
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Database connected successfully!' }),
+    };
+  } catch (error) {
+    console.error('Database connection error:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Database connection failed!', error: error.message }),
+    };
+  }
 };

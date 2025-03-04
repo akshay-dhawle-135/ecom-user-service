@@ -1,6 +1,11 @@
 {
+  "type": "commonjs",
   "devDependencies": {
-    "serverless-offline": "^13.8.0",
-    "serverless-dotenv-plugin": "^6.0.0"
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-offline": "^13.8.0"
+  },
+  "dependencies": {
+    "pg": "^8.13.3",
+    "typeorm": "^0.3.21"
   }
 }
