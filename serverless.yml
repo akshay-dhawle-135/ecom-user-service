@@ -15,9 +15,9 @@ provider:
     DB_USERNAME: ${env:DB_USER, ssm:${self:custom.secretsPrefix}/DB_USERNAME}
     DB_PASSWORD: ${env:DB_PASSWORD, ssm:${self:custom.secretsPrefix}/DB_PASSWORD}
     DB_PORT: ${env:DB_PORT, ssm:${self:custom.secretsPrefix}/DB_PORT}
-  vpc:
-    subnetIds: ${env:SUBNET_IDS, ssm:${self:custom.secretsPrefix}/SUBNET_IDS}
-    securityGroupIds: ${env:SECURITY_GROUP_IDS, ssm:${self:custom.secretsPrefix}/SECURITY_GROUP_IDS}
+  # vpc:
+  #   subnetIds: ${env:SUBNET_IDS, ssm:${self:custom.secretsPrefix}/SUBNET_IDS}
+  #   securityGroupIds: ${env:SECURITY_GROUP_IDS, ssm:${self:custom.secretsPrefix}/SECURITY_GROUP_IDS}
 
 functions:
   healthCheck:
