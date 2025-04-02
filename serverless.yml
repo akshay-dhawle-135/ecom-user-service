@@ -1,34 +1,7 @@
-service: '${env:SERVICE_NAME_PREFIX, "local"}'
+service: '${env:SERVICE_NAME_PREFIX, "inbox-api-local"}'
 frameworkVersion: '3'
+custom: '${file(./serverless-config/custom.yml)}'
+provider: '${file(./serverless-config/provider.yml)}'
 useDotenv: true
-
-custom:
-  secretsPrefix: '/${env:SERVICE_NAME_PREFIX, "/ecom-dev-usea1-ecom-user-service-api"}'
-
-provider:
-  name: aws
-  runtime: nodejs18.x
-  region: ap-south-1
-  environment:
-    DB_HOST: ${env:DB_HOST, ssm:${self:custom.secretsPrefix}/DB_HOST}  
-    DB_NAME: ${env:DB_NAME, ssm:${self:custom.secretsPrefix}/DB_NAME}
-    DB_USERNAME: ${env:DB_USER, ssm:${self:custom.secretsPrefix}/DB_USERNAME}
-    DB_PASSWORD: ${env:DB_PASSWORD, ssm:${self:custom.secretsPrefix}/DB_PASSWORD}
-    DB_PORT: ${env:DB_PORT, ssm:${self:custom.secretsPrefix}/DB_PORT}
-  # vpc:
-  #   subnetIds: ${env:SUBNET_IDS, ssm:${self:custom.secretsPrefix}/SUBNET_IDS}
-  #   securityGroupIds: ${env:SECURITY_GROUP_IDS, ssm:${self:custom.secretsPrefix}/SECURITY_GROUP_IDS}
-
-functions:
-  healthCheck:
-    handler: index.handler
-    environment:
-      key: ${env:API_KEY, ssm:${self:custom.secretsPrefix}/API_KEY}
-    events:
-      - http:
-          method: get
-          path: v1/healthcheck    
-
-plugins:
-  - serverless-dotenv-plugin
-  - serverless-offline
+functions: '${file(serverless-config/functions.yml)}'
+plugins: ${file(serverless-config/plugins.yml):plugins}

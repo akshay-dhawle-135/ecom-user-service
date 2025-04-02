@@ -1,0 +1,21 @@
+getUser:
+  handler: index.get
+  events:
+    - http:
+        method: get
+        path: v1/users
+        authorizer:
+          arn: ${env:USERPOOL, ssm:${self:custom.secretsPrefix}/COGNITO_USER_POOL_ARN}
+          scopes:
+            - users/read
+
+createUser:
+  handler: index.create
+  events:
+    - http:
+        method: post
+        path: v1/users
+        authorizer:
+          arn: ${env:USERPOOL, ssm:${self:custom.secretsPrefix}/COGNITO_USER_POOL_ARN}
+          scopes:
+            - users/write

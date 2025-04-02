@@ -1,0 +1,8 @@
+name: aws
+region: us-east-1
+runtime: nodejs20.x
+
+iam:
+  role:
+    name: ${self:service}-exec-role
+    managedPolicies: ${env:EXECUTION_ROLE_SUPPLEMENTAL_POLICY_ARN, ssm:${self:custom.secretsPrefix}/EXECUTION_ROLE_SUPPLEMENTAL_POLICY_ARN, null}  
